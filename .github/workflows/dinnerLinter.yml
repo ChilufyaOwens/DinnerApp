@@ -25,7 +25,7 @@ jobs:
     # Grant status permission for MULTI_STATUS #
     ############################################
     permissions:
-      contents: read-all
+      contents: read
       packages: read
       statuses: write
 
