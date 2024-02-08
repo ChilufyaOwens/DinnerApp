@@ -5,18 +5,17 @@ on:
   push: 
   pull_request: 
   
-# Don't grant any access by default
-permissions: {}
-
 jobs:
   build:
     name: Lint
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read      
+      contents: read|write|none
+      packages: read|write|none
+      security-events: read|write|none
       # To report GitHub Actions status checks
-      statuses: write
+      statuses: read|write|none     
 
     steps:
       - name: Checkout code
