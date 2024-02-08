@@ -1,8 +1,6 @@
 ---
 #################################
-#################################
 ## Super Linter GitHub Actions ##
-#################################
 #################################
 name: Lint Code Base
 
@@ -10,11 +8,9 @@ name: Lint Code Base
 # Start the job on all push #
 #############################
 on:
-  push:
-    branches-ignore: [master, main, development]
-    
+  push:   
   pull_request:
-    branches: [master, main, development]
+    branches: [master]
 
 ###############
 # Set the Job #
