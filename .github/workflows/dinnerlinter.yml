@@ -20,7 +20,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          repository: self
           ref: ${{ github.event.before }}
           # super-linter needs the full git history to get the
           # list of files that changed across commits
