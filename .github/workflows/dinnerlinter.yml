@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read|write|none
-      packages: read|write|none
+      contents: read
+      packages: read
       # To report GitHub Actions status checks
       statuses: write    
 
