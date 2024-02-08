@@ -13,7 +13,6 @@ jobs:
     permissions:
       contents: read|write|none
       packages: read|write|none
-      security-events: read|write|none
       # To report GitHub Actions status checks
       statuses: read|write|none     
 
