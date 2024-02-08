@@ -4,6 +4,9 @@ name: Lint
 on:  
   push: 
   pull_request: 
+  
+# Don't grant any access by default
+permissions: {}
 
 jobs:
   build:
