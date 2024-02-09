@@ -6,15 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\DinnerApp.Application\DinnerApp.Application.csproj" />
     <ProjectReference Include="..\DinnerApp.Contracts\DinnerApp.Contracts.csproj" />
