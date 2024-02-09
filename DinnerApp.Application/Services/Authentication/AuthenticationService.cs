@@ -1,21 +1,38 @@
+using DinnerApp.Application.Common.Interfaces.Authentication;
+
 namespace DinnerApp.Application.Services.Authentication;
 
-public class AuthenticationService : IAuthenticationService
+public class AuthenticationService(IJwtTokenGenerator tokenGenerator) : IAuthenticationService
 {
-    public AuthenticationResult Login(string userName, string password)
+    private readonly IJwtTokenGenerator _tokenGenerator = tokenGenerator;
+
+    public AuthenticationResult Login(
+        string userName, 
+        string password)
     {
+        var userId = Guid.NewGuid();
+
+        var token = _tokenGenerator.GenerateToken(userId, "Chilufya", "Owens");
         return new AuthenticationResult(
-            Guid.NewGuid(), 
+            userId, 
             "Chilufya", 
             "Owens", 
             "chilufyao@ownat.com", 
             userName, 
-            "token");
+            token);
     }
 
-    public AuthenticationResult Register(string firstName, string lastName, string email, string userName, string password)
+    public AuthenticationResult Register(
+        string firstName, 
+        string lastName, 
+        string email, 
+        string userName, 
+        string password)
     {
+        var userId = Guid.NewGuid();
+        var token = _tokenGenerator.GenerateToken(userId, firstName, lastName);
+        
         return new AuthenticationResult(
-            Guid.NewGuid(), firstName, lastName, email, userName, "token");
+            userId, firstName, lastName, email, userName, token);
     }
 }

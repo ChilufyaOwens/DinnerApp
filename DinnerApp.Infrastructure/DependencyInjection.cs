@@ -1,11 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DinnerApp.Application.Common.Interfaces.Authentication;
+using DinnerApp.Infrastructure.Authentication;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DinnerApp.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastruture(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        return services;
+         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+         return services;
     }
 }
