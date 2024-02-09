@@ -1,0 +1,13 @@
+@DinnerApp.Api_HostAddress = http://localhost:7001
+
+POST {{DinnerApp.Api_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Chilufya",
+  "lastName": "Owens. C",
+  "email": "chilufyaowens@ownat.com",
+  "userName": "ChilufyaO",
+  "Password": "Kenzie123$"
+}
+###
