@@ -1,5 +1,5 @@
 namespace DinnerApp.Contracts.Authentication;
 
 public record LoginRequest(
-    string Username,
+    string Email, 
     string Password);
