@@ -1,6 +1,8 @@
 using DinnerApp.Application.Common.Interfaces.Authentication;
 using DinnerApp.Application.Common.Interfaces.Persistence;
+using DinnerApp.Domain.Common.Errors;
 using DinnerApp.Domain.Entities;
+using ErrorOr;
 
 namespace DinnerApp.Application.Services.Authentication;
 
@@ -9,27 +11,27 @@ public class AuthenticationService(IJwtTokenGenerator tokenGenerator, IUserRepos
     private readonly IJwtTokenGenerator _tokenGenerator = tokenGenerator;
     private readonly IUserRepository _userRepository = userRepository;
 
-    public AuthenticationResult Login(
+    public ErrorOr<AuthenticationResult> Login(
         string email,
         string password)
     {
         if (_userRepository.GetUserByEmail(email) is not User user)
         {
-            throw new Exception($"User with given email: {email} does not exists");
+            return Errors.Authentication.InvalidCredential;
         }
 
         if (user.Password != password)
         {
-            throw new Exception("Invalid Password!");
+            return Errors.Authentication.InvalidCredential;
         }
 
-        var token = _tokenGenerator.GenerateToken(user.Id, user.FirstName, user.LastName);
+        var token = _tokenGenerator.GenerateToken(user);
         return new AuthenticationResult(
             user, 
             token);
     }
 
-    public AuthenticationResult Register(
+    public ErrorOr<AuthenticationResult> Register(
         string firstName, 
         string lastName, 
         string email, 
@@ -39,7 +41,7 @@ public class AuthenticationService(IJwtTokenGenerator tokenGenerator, IUserRepos
         // Validate user doesn't exist 
         if (_userRepository.GetUserByEmail(email) is not null)
         {
-             throw new Exception($"User with given email: {email} already exist");
+            return Errors.User.DuplicateEmail;
         }
 
         var user = new User
@@ -53,7 +55,7 @@ public class AuthenticationService(IJwtTokenGenerator tokenGenerator, IUserRepos
         
         _userRepository.Add(user);
        
-        var token = _tokenGenerator.GenerateToken(user.Id, firstName, lastName);
+        var token = _tokenGenerator.GenerateToken(user);
         
         return new AuthenticationResult(
             user, token);

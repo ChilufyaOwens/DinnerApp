@@ -1,47 +1,53 @@
 using DinnerApp.Application.Services.Authentication;
 using DinnerApp.Contracts.Authentication;
+using DinnerApp.Domain.Common.Errors;
+using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DinnerApp.Api.Controllers;
-[ApiController]
+
 [Route("api/auth")]
-public class AuthenticationController(IAuthenticationService authenticationService) : ControllerBase
+public class AuthenticationController(IAuthenticationService authenticationService) : ApiController
 {
-     [Route("register")]
+    private readonly IAuthenticationService _authenticationService = authenticationService;
+
+    [Route("register")]
      public IActionResult Register(RegisterRequest request)
-     {
-          var authResult = authenticationService.Register(
-               request.FirstName,
-               request.LastName,
-               request.Email,
-               request.UserName,
-               request.Password);
-          
-          var response = new AuthenticationResponse(
-          authResult.User.Id,
-          authResult.User.FirstName,
-          authResult.User.LastName,
-          authResult.User.Email,
-          authResult.User.UserName,
-          authResult.Token);
+    {
+        var authResult = _authenticationService.Register(
+             request.FirstName,
+             request.LastName,
+             request.Email,
+             request.UserName,
+             request.Password);
 
-          return Ok(response);
-     }
+        return authResult.Match(
+            authResult => Ok(MapAuthResults(authResult)),
+            errors => Problem(errors));        
+    }
 
-     [Route("Login")]
+    private static AuthenticationResponse MapAuthResults(AuthenticationResult authResult)
+    {
+        return new AuthenticationResponse(
+                  authResult.User.Id,
+                  authResult.User.FirstName,
+                  authResult.User.LastName,
+                  authResult.User.Email,
+                  authResult.User.UserName,
+                  authResult.Token);
+    }
+
+    [Route("Login")]
      public IActionResult Login(LoginRequest request)
      {
-          var authResult = authenticationService.Login(request. Email, request.Password);
+          var authResult = _authenticationService   .Login(
+              request. Email, 
+              request.Password);
+        
 
-          var response = new AuthenticationResponse(
-               authResult.User.Id,
-               authResult.User.FirstName,
-               authResult.User.LastName,
-               authResult.User.Email,
-               authResult.User.UserName,
-               authResult.Token
-          );
-          return Ok(response);
+        return authResult.Match(
+            authResult => Ok(MapAuthResults(authResult)),
+            errors => Problem(errors));
      }
      
 }

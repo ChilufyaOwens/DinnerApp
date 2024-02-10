@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using DinnerApp.Application.Common.Interfaces.Authentication;
 using DinnerApp.Application.Common.Interfaces.Services;
+using DinnerApp.Domain.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -13,7 +14,7 @@ public class JwtTokenGenerator(IDateTimeProvider timeProvider, IOptions<JwtSetti
     private readonly IDateTimeProvider _timeProvider = timeProvider;
     private readonly JwtSettings _jwtSettings = jwtSettingsOption.Value;
 
-    public string GenerateToken(Guid userId, string firstName, string lastName)
+    public string GenerateToken(User user)
     {
         var signedCredentials = new SigningCredentials(
             new SymmetricSecurityKey(
@@ -22,9 +23,9 @@ public class JwtTokenGenerator(IDateTimeProvider timeProvider, IOptions<JwtSetti
         );
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-            new Claim(JwtRegisteredClaimNames.GivenName, firstName),
-            new Claim(JwtRegisteredClaimNames.FamilyName, lastName),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
+            new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
