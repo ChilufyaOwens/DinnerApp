@@ -1,25 +1,28 @@
-using DinnerApp.Application.Services.Authentication;
+using DinnerApp.Application.Authentication.Commands.Register;
+using DinnerApp.Application.Authentication.Common;
+using DinnerApp.Application.Authentication.Queries.Login;
 using DinnerApp.Contracts.Authentication;
-using DinnerApp.Domain.Common.Errors;
-using ErrorOr;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DinnerApp.Api.Controllers;
 
 [Route("api/auth")]
-public class AuthenticationController(IAuthenticationService authenticationService) : ApiController
+public class AuthenticationController( IMediator mediator) : ApiController
 {
-    private readonly IAuthenticationService _authenticationService = authenticationService;
+    private readonly IMediator _mediator = mediator;
 
     [Route("register")]
-     public IActionResult Register(RegisterRequest request)
+    public async Task<IActionResult> Register(RegisterRequest request)
     {
-        var authResult = _authenticationService.Register(
-             request.FirstName,
-             request.LastName,
-             request.Email,
-             request.UserName,
-             request.Password);
+        var command = new RegisterCommand(
+            request.FirstName,
+            request.LastName, 
+            request.Email,
+            request.UserName,
+            request.Password );
+
+        var authResult = await _mediator.Send(command);
 
         return authResult.Match(
             authResult => Ok(MapAuthResults(authResult)),
@@ -38,13 +41,12 @@ public class AuthenticationController(IAuthenticationService authenticationServi
     }
 
     [Route("Login")]
-     public IActionResult Login(LoginRequest request)
+     public async Task<IActionResult> Login(LoginRequest request)
      {
-          var authResult = _authenticationService   .Login(
-              request. Email, 
-              request.Password);
-        
-
+        var query = new LoginQuery(request.Email, request.Password);
+          var authResult = await _mediator.Send(query);
+   
+    
         return authResult.Match(
             authResult => Ok(MapAuthResults(authResult)),
             errors => Problem(errors));
