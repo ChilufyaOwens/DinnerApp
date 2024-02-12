@@ -1,51 +1,40 @@
 using DinnerApp.Application.Authentication.Commands.Register;
-using DinnerApp.Application.Authentication.Common;
 using DinnerApp.Application.Authentication.Queries.Login;
 using DinnerApp.Contracts.Authentication;
+using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DinnerApp.Api.Controllers;
 
 [Route("api/auth")]
-public class AuthenticationController(IMediator mediator) : ApiController
+public class AuthenticationController(ISender mediator, IMapper mapper) : ApiController
 {
-    private readonly IMediator _mediator = mediator;
+    private readonly ISender _mediator = mediator;
+    private readonly IMapper _mapper = mapper;
     
     [Route("register")]
     public async Task<IActionResult> Register(RegisterRequest request)
-    {
-        var command = new RegisterCommand(request.FirstName, request.UserName, request.Email, request.UserName, request.Password);
-
+    { 
+        var command = _mapper.Map<RegisterCommand>(request);
+       
         var authResult = await _mediator.Send(command);
-
         return authResult.Match(
-            authResult => Ok(MapAuthResults(authResult)),
-            errors => Problem(errors));
+            authResponse => Ok(_mapper.Map<AuthenticationResponse>(authResponse)),
+            Problem);
     }
 
-    private AuthenticationResponse MapAuthResults(AuthenticationResult authResult)
-    {
-        return new AuthenticationResponse(
-            authResult.User.Id,
-            authResult.User.FirstName,
-            authResult.User.LastName,
-            authResult.User.Email,
-            authResult.User.UserName,
-            authResult.Token
-            );
-    }
-
+   
     [Route("Login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
-        var query = new LoginQuery(request.Email, request.Password);
+        var query = _mapper.Map<LoginQuery>(request);
+        //var query = new LoginQuery(request.Email, request.Password);
         var authResult = await _mediator.Send(query);
 
-
         return authResult.Match(
-            authResult => Ok(MapAuthResults(authResult)),
-            errors => Problem(errors));
+            authResponse => Ok(_mapper.Map<AuthenticationResponse>(authResponse)),
+            Problem);
     }
 
 }

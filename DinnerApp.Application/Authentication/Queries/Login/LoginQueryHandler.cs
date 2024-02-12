@@ -2,7 +2,6 @@
 using DinnerApp.Application.Common.Interfaces.Authentication;
 using DinnerApp.Application.Common.Interfaces.Persistence;
 using DinnerApp.Domain.Common.Errors;
-using DinnerApp.Domain.Entities;
 using ErrorOr;
 using MediatR;
 
@@ -16,7 +15,8 @@ public class LoginQueryHandler(IJwtTokenGenerator tokenGenerator, IUserRepositor
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
     {
-        if (_userRepository.GetUserByEmail(query.Email) is not User user)
+        await Task.CompletedTask;
+        if (_userRepository.GetUserByEmail(query.Email) is not { } user)
         {
             return Errors.Authentication.InvalidCredential;
         }
