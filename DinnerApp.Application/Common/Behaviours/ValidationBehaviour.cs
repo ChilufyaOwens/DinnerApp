@@ -4,7 +4,7 @@ using MediatR;
 
 namespace DinnerApp.Application.Common.Behaviours;
 
-public class ValidationBehaviour<TRequest, TResponse>(IValidator<TRequest>? validator)
+public class ValidationBehaviour<TRequest, TResponse>(IValidator<TRequest>? validator = null)
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
     where TResponse : IErrorOr
