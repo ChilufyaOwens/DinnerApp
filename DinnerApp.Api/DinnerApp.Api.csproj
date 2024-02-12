@@ -7,6 +7,10 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <UserSecretsId>63aeec65-bff7-4102-9b7a-1e9edb62637c</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.4.0" />
+  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\DinnerApp.Application\DinnerApp.Application.csproj" />
