@@ -3,7 +3,7 @@ POST {{DinnerApp.Api_HostAddress}}/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "ChilufyaO",
-  "password": "Kenzie123$"
+  "email": "chilufyao@ownat.com",
+  "password": "Kenzie123$!"
 }
 ###
