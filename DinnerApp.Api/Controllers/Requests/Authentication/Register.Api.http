@@ -4,7 +4,7 @@ POST {{DinnerApp.Api_HostAddress}}/api/auth/register
 Content-Type: application/json
 
 {
-  "firstName": "Chilufya",
+  "firstName": "Kenzie",
   "lastName": "Owens. C",
   "email": "chilufyao@ownat.com",
   "userName": "ChilufyaO",
