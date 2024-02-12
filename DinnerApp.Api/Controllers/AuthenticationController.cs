@@ -1,7 +1,7 @@
 using DinnerApp.Application.Authentication.Commands.Register;
+using DinnerApp.Application.Authentication.Common;
 using DinnerApp.Application.Authentication.Queries.Login;
 using DinnerApp.Contracts.Authentication;
-using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +11,6 @@ namespace DinnerApp.Api.Controllers;
 public class AuthenticationController(IMediator mediator) : ApiController
 {
     private readonly IMediator _mediator = mediator;
-    private readonly IMapper _mapper = mapper;
     
     [Route("register")]
     public async Task<IActionResult> Register(RegisterRequest request)
@@ -25,7 +24,17 @@ public class AuthenticationController(IMediator mediator) : ApiController
             errors => Problem(errors));
     }
 
-    
+    private AuthenticationResponse MapAuthResults(AuthenticationResult authResult)
+    {
+        return new AuthenticationResponse(
+            authResult.User.Id,
+            authResult.User.FirstName,
+            authResult.User.LastName,
+            authResult.User.Email,
+            authResult.User.UserName,
+            authResult.Token
+            );
+    }
 
     [Route("Login")]
     public async Task<IActionResult> Login(LoginRequest request)
