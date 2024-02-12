@@ -5,8 +5,7 @@ using DinnerApp.Contracts.Authentication;
 using Mapster;
 
 namespace DinnerApp.Api.Common.Mapping;
-
-public  class AuthenticationMappingConfig : IRegister
+public class AuthenticationMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
