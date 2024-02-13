@@ -1,11 +1,11 @@
-﻿using DinnerApp.Domain.Common.Menu.ValueObjects;
+﻿using DinnerApp.Domain.Menu.ValueObjects;
 using DinnerApp.Domain.Common.Models;
 
-namespace DinnerApp.Domain.Common.Menu.Entities
+namespace DinnerApp.Domain.Menu.Entities
 {
     public sealed class MenuSection : Entity<MenuSectionId>
     {
-        private readonly List<MenuItem> _items = new();
+        private readonly List<MenuItem> _items = [];
         public string Name { get; } 
         public string Description { get; }
 
@@ -23,7 +23,7 @@ namespace DinnerApp.Domain.Common.Menu.Entities
             string name,
             string description)
         {
-            return new(
+            return new MenuSection(
                 MenuSectionId.CreateUnique(),
                 name,
                 description);

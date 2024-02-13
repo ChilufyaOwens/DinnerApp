@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using DinnerApp.Application.Common.Interfaces.Authentication;
 using DinnerApp.Application.Common.Interfaces.Services;
-using DinnerApp.Domain.Entities;
+using DinnerApp.Domain.User;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 

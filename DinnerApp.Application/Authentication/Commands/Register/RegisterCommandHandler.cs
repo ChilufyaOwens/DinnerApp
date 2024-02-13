@@ -2,7 +2,7 @@
 using DinnerApp.Application.Common.Interfaces.Authentication;
 using DinnerApp.Application.Common.Interfaces.Persistence;
 using DinnerApp.Domain.Common.Errors;
-using DinnerApp.Domain.Entities;
+using DinnerApp.Domain.User;
 using ErrorOr;
 using MediatR;
 

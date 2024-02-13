@@ -1,6 +1,6 @@
 ﻿using DinnerApp.Domain.Common.Models;
 
-namespace DinnerApp.Domain.Common.Menu.ValueObjects;
+namespace DinnerApp.Domain.Menu.ValueObjects;
 
 public sealed class MenuItemId : ValueObject
 {
@@ -15,7 +15,8 @@ public sealed class MenuItemId : ValueObject
     {
         return new(Guid.NewGuid());
     }
-    public override IEnumerable<object> GetEqualityComponent()
+
+    protected override IEnumerable<object> GetEqualityComponent()
     {
         yield return Value;
     }

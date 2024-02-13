@@ -1,4 +1,4 @@
-using DinnerApp.Domain.Entities;
+using DinnerApp.Domain.User;
 
 namespace DinnerApp.Application.Common.Interfaces.Persistence;
 

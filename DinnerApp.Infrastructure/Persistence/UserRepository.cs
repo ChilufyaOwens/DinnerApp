@@ -1,5 +1,5 @@
 using DinnerApp.Application.Common.Interfaces.Persistence;
-using DinnerApp.Domain.Entities;
+using DinnerApp.Domain.User;
 
 namespace DinnerApp.Infrastructure.Persistence;
 

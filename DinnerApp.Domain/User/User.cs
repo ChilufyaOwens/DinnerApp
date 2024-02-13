@@ -1,4 +1,5 @@
-namespace DinnerApp.Domain.Entities;
+// Purpose: This file contains the User class which is used to represent a user in the system.
+namespace DinnerApp.Domain.User;
 
 public class User
 {

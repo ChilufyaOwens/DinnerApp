@@ -1,11 +1,11 @@
 ﻿using DinnerApp.Domain.Common.Models;
 
-namespace DinnerApp.Domain.Common.Menu.ValueObjects
+namespace DinnerApp.Domain.Menu.ValueObjects
 {
     public sealed class MenuSectionId : ValueObject
     {
-        public Guid Value { get; }
-        x
+        private Guid Value { get; }
+        
         private MenuSectionId(Guid value)
         {
             Value = value;
@@ -13,9 +13,10 @@ namespace DinnerApp.Domain.Common.Menu.ValueObjects
 
         public static MenuSectionId CreateUnique()
         {
-            return new(Guid.NewGuid());
+            return new MenuSectionId(Guid.NewGuid());
         }
-        public override IEnumerable<object> GetEqualityComponent()
+
+        protected override IEnumerable<object> GetEqualityComponent()
         {
             yield return Value;
         }

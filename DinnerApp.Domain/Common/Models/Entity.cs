@@ -1,12 +1,9 @@
 ﻿namespace DinnerApp.Domain.Common.Models
 {
-    public abstract class Entity<TId> : IEquatable<Entity<TId>> where TId : notnull
+    public abstract class Entity<TId>(TId id) : IEquatable<Entity<TId>>
+        where TId : notnull
     {
-        public TId Id { get; protected set; }
-
-        protected Entity(TId id) {
-            Id = id;
-        }
+        private TId Id { get; } = id;
 
         public override bool Equals(object? obj)
         {
