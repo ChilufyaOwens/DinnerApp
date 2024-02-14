@@ -1,10 +1,10 @@
 using DinnerApp.Domain.Common.Models;
 
-namespace DinnerApp.Domain.Dinner.ValueObjects;
+namespace DinnerApp.Domain.DinnerAggregate.ValueObjects;
 
 public class DinnerId : ValueObject
 {
-    private Guid Value { get; }
+    public Guid Value { get; }
 
     private DinnerId(Guid value)
     {

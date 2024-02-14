@@ -18,13 +18,20 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,
         ConfigurationManager configuration)
     {
-         services.AddAuth(configuration);
          services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-         services.AddScoped<IUserRepository, UserRepository>();
+         services.AddAuth(configuration);
+         services.AddPersistence();
          return services;
     }
+    
+    private static IServiceCollection AddPersistence(this IServiceCollection services)
+    {
+        services.AddScoped<IMenuRepository, MenuRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        return services;
+    }
 
-    private static IServiceCollection AddAuth(this IServiceCollection services, ConfigurationManager configuration)
+    private static void AddAuth(this IServiceCollection services, ConfigurationManager configuration)
     {
         var jwtSettings = new JwtSettings();
         configuration.Bind(JwtSettings.SectionName, jwtSettings);
@@ -44,7 +51,5 @@ public static class DependencyInjection
                 ValidAudience = jwtSettings.Audience,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
             });
-        
-        return services;
     }
 }

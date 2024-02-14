@@ -3,7 +3,7 @@
     public abstract class Entity<TId>(TId id) : IEquatable<Entity<TId>>
         where TId : notnull
     {
-        private TId Id { get; } = id;
+        public TId Id { get; } = id;
 
         public override bool Equals(object? obj)
         {

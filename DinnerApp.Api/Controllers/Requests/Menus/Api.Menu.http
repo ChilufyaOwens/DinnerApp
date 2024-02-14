@@ -1,0 +1,24 @@
+@DinnerApp.Api_HostAddress = http://localhost:7001
+@hostId = 4cd44552-66d9-44c0-b877-6388c6542345
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0Y2Q0NDU1Mi02NmQ5LTQ0YzAtYjg3Ny02Mzg4YzY1NDIzNDUiLCJnaXZlbl9uYW1lIjoiS2VuemllIiwiZmFtaWx5X25hbWUiOiJPd2Vucy4gQyIsImp0aSI6ImY0OGFmYzVhLWI0NGEtNDJjMy05ZTExLTQyZDc5OGM4YzU5NiIsImV4cCI6MTcwNzkyOTQwNywiaXNzIjoiT3duYXREaW5uZXIiLCJhdWQiOiJPd25hdERpbm5lciJ9._x10WrhNK77oXFl_Xpk7qP15xuOAM4QHAq9oq9H2Byk
+
+POST {{DinnerApp.Api_HostAddress}}/hosts/{{hostId}}/menus
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name" : "Yummy Menu",
+  "description" : "A menu with Yummy food",
+  "sections" : [
+    {
+      "name": "Appetizers",
+      "description": "Starters",
+      "items": [
+        {
+          "name" : "Fried Pickles",
+          "description": "Deep fried pickles"
+        }
+      ]
+    }
+  ]
+}

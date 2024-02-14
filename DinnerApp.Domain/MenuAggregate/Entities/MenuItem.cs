@@ -1,13 +1,12 @@
-﻿using DinnerApp.Domain.Menu.ValueObjects;
-using DinnerApp.Domain.Common.Models;
-using DinnerApp.Domain.Menu.ValueObjects;
+﻿using DinnerApp.Domain.Common.Models;
+using DinnerApp.Domain.MenuAggregate.ValueObjects;
 
-namespace DinnerApp.Domain.Menu.Entities
+namespace DinnerApp.Domain.MenuAggregate.Entities
 {
-    public sealed class MenuItem : Entity<MenuItemId>
+    public sealed class  MenuItem : Entity<MenuItemId>
     {
-        public string Name { get; }
-        public string Description { get; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
 
         private MenuItem(MenuItemId menuItemId, string name, string description)
             : base(menuItemId) 

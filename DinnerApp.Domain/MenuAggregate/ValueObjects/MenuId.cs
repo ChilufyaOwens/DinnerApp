@@ -1,10 +1,10 @@
 ﻿using DinnerApp.Domain.Common.Models;
 
-namespace DinnerApp.Domain.Menu.ValueObjects
+namespace DinnerApp.Domain.MenuAggregate.ValueObjects
 {
     public sealed class MenuId : ValueObject
     {
-        private Guid Value { get; }
+        public Guid Value { get; private set; }
 
         private MenuId(Guid value) { 
             Value = value;

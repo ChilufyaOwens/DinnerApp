@@ -1,17 +1,17 @@
-﻿using DinnerApp.Domain.Menu.Entities;
-using DinnerApp.Domain.Menu.ValueObjects;
-using DinnerApp.Domain.Common.Models;
+﻿using DinnerApp.Domain.Common.Models;
 using DinnerApp.Domain.Common.ValueObjects;
-using DinnerApp.Domain.Dinner.ValueObjects;
-using DinnerApp.Domain.Host.ValueObjects;
-using DinnerApp.Domain.MenuReview.ValueObjects;
+using DinnerApp.Domain.DinnerAggregate.ValueObjects;
+using DinnerApp.Domain.HostAggregate.ValueObjects;
+using DinnerApp.Domain.MenuAggregate.Entities;
+using DinnerApp.Domain.MenuAggregate.ValueObjects;
+using DinnerApp.Domain.MenuReviewAggregate.ValueObjects;
 
 namespace DinnerApp.Domain.Menu
 {
     public sealed class Menu : AggregateRoot<MenuId>  
     {
         
-        private readonly List<MenuSection> _sections = [];
+        private readonly List<MenuSection>? _sections = [];
         private readonly List<DinnerId> _dinners = [];
         private readonly List<MenuReviewId> _menuReviewIds;
 
@@ -25,29 +25,35 @@ namespace DinnerApp.Domain.Menu
         public DateTime CreatedDateTime { get; }
         public DateTime UpdatedDateTime { get; }
 
-        private Menu(MenuId menuId,
+        private Menu(
+            MenuId menuId,
+            HostId hostId,
             string name,
             string description,
-            HostId hostId,
-            DateTime createdDateTime,
-            DateTime updatedDateTime) : base(menuId)
+            AverageRating averageRating,
+            List<MenuSection>? sections
+            ) : base(menuId)
         {
+            HostId = hostId;
             Name = name;
             Description = description;
-            HostId = hostId;
-            CreatedDateTime = createdDateTime;
-            UpdatedDateTime = updatedDateTime;
+            AverageRating = averageRating;
+            _sections = sections;
         }
 
-        public static Menu Create(string name, string description, HostId hostId)
+        public static Menu  Create(
+            HostId hostId, 
+            string name, 
+            string description, 
+            List<MenuSection>? sections)
         {
             return new Menu(
                 MenuId.CreateUnique(),
+                hostId,
                 name,
                 description,
-                hostId,
-                DateTime.UtcNow,
-                DateTime.UtcNow);
+                AverageRating.CreateNew(0, 0), 
+                sections ?? [] );
         }
 
     }

@@ -1,10 +1,10 @@
 using DinnerApp.Domain.Common.Models;
 
-namespace DinnerApp.Domain.Host.ValueObjects;
+namespace DinnerApp.Domain.HostAggregate.ValueObjects;
 
 public sealed class HostId : ValueObject
 {
-    private Guid Value { get; }
+    public Guid Value { get; }
 
     private HostId(Guid value)
     {
@@ -16,8 +16,16 @@ public sealed class HostId : ValueObject
         return new HostId(Guid.NewGuid());
     }
     
+    public static HostId Create(string requestHostId)
+    {
+        return Guid.TryParse(requestHostId, out var guid) ? new HostId(guid) 
+            : throw new ArgumentException("Invalid HostId");
+    }
+    
     protected override IEnumerable<object> GetEqualityComponent()
     {
         yield return Value;
     }
+
+    
 }

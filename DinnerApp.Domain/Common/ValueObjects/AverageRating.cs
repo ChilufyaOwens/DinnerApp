@@ -10,8 +10,8 @@ public sealed class AverageRating : ValueObject
         NumberOfRatings = numberOfRatings;
     }
 
-    private double Value { get; set;}
-    private int NumberOfRatings { get; set;}
+    public double Value { get; private set;}
+    public int NumberOfRatings { get; private set;}
     
     public static AverageRating CreateNew(double rating = 0, int numberOfRatings = 0)
     {
