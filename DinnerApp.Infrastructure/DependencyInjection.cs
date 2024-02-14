@@ -4,8 +4,10 @@ using DinnerApp.Application.Common.Interfaces.Persistence;
 using DinnerApp.Application.Common.Interfaces.Services;
 using DinnerApp.Infrastructure.Authentication;
 using DinnerApp.Infrastructure.Persistence;
+using DinnerApp.Infrastructure.Persistence.Repositories;
 using DinnerApp.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -26,6 +28,7 @@ public static class DependencyInjection
     
     private static IServiceCollection AddPersistence(this IServiceCollection services)
     {
+        services.AddDbContext<DinnerDbContext>(options => options.UseSqlServer());
         services.AddScoped<IMenuRepository, MenuRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         return services;

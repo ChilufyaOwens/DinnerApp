@@ -21,6 +21,11 @@ public sealed class HostId : ValueObject
         return Guid.TryParse(requestHostId, out var guid) ? new HostId(guid) 
             : throw new ArgumentException("Invalid HostId");
     }
+
+    public static HostId Create(Guid value)
+    {
+        return new HostId(value);
+    }
     
     protected override IEnumerable<object> GetEqualityComponent()
     {
