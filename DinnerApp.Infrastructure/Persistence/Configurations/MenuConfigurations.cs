@@ -13,7 +13,48 @@ public class MenuConfigurations : IEntityTypeConfiguration<Menu>
     {
         ConfigureMenusTable(builder);
         ConfigureMenuSectionsTable(builder);
+        ConfigureMenuDinnerIdsTable(builder);
+        ConfigureMenuReviewIdsTable(builder);
     }
+
+    private void ConfigureMenuReviewIdsTable(EntityTypeBuilder<Menu> builder)
+    {
+        builder.OwnsMany(mr => mr.MenuReviewIds, mri =>
+        {
+            mri.ToTable("MenuReviewIds");
+
+            mri.WithOwner().HasForeignKey("MenuId");
+
+            mri.HasKey("Id");
+
+            mri.Property(r => r.Value)
+                .HasColumnName("MenuReviewId")
+                .ValueGeneratedNever();
+        });
+        
+        builder.Metadata.FindNavigation(nameof(Menu.MenuReviewIds))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+    }
+
+    private void ConfigureMenuDinnerIdsTable(EntityTypeBuilder<Menu> builder)
+    {
+        builder.OwnsMany(m => m.DinnerIds, di =>
+        {
+            di.ToTable("MenuDinnerIds");
+
+            di.WithOwner().HasForeignKey("MenuId");
+
+            di.HasKey("Id");
+
+            di.Property(d => d.Value)
+                .HasColumnName("DinnerId")
+                .ValueGeneratedNever();
+        });
+        
+        builder.Metadata.FindNavigation(nameof(Menu.DinnerIds))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+    }
+
 
     private void ConfigureMenuSectionsTable(EntityTypeBuilder<Menu> builder)
     {
@@ -23,18 +64,18 @@ public class MenuConfigurations : IEntityTypeConfiguration<Menu>
 
             ms.WithOwner().HasForeignKey("MenuId");
 
-            ms.HasKey("Id", "MenuSectionId");
+            ms.HasKey(nameof(MenuSection.Id), "MenuSectionId");
 
-            ms.Property(ms => ms.Id)
+            ms.Property(s => s.Id)
             .HasColumnName("MenuSectionId")
             .ValueGeneratedNever()
             .HasConversion(id => id.Value, value => MenuSectionId.Create(value));
 
-            ms.Property(ms => ms.Name)
+            ms.Property(s => s.Name)
             .IsRequired()
             .HasMaxLength(100);
 
-            ms.Property(ms => ms.Description)
+            ms.Property(s => s.Description)
             .IsRequired()
             .HasMaxLength(500);
 
@@ -46,23 +87,23 @@ public class MenuConfigurations : IEntityTypeConfiguration<Menu>
 
                 ib.HasKey(nameof(MenuItem.Id),"MenuSectionId", "MenuId");
 
-                ib.Property(ib => ib.Id)
+                ib.Property(i => i.Id)
                 .HasColumnName("MenuItemId") 
                 .ValueGeneratedNever()
                 .HasConversion(id => id.Value, value => MenuItemId.Create(value));
 
-                ib.Property(ib => ib.Name)
+                ib.Property(i => i.Name)
                 .IsRequired()
                 .HasMaxLength(100);
 
-                ib.Property(ib => ib.Description)
+                ib.Property(i => i.Description)
                 .IsRequired()
                 .HasMaxLength(500);
 
             });
 
-            ms.Navigation(ms => ms.Items).Metadata.SetField("_items");
-            ms.Navigation(ms => ms.Items).UsePropertyAccessMode(PropertyAccessMode.Field);
+            ms.Navigation(s => s.Items).Metadata.SetField("_items");
+            ms.Navigation(s => s.Items).UsePropertyAccessMode(PropertyAccessMode.Field);
 
             
         });
