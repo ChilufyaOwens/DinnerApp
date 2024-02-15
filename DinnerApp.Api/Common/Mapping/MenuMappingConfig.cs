@@ -1,6 +1,6 @@
 using DinnerApp.Application.Menus.Commands.CreateMenu;
 using DinnerApp.Contracts.Menus;
-using DinnerApp.Domain.Menu;
+using DinnerApp.Domain.MenuAggregate;
 using Mapster;
 using MenuItem = DinnerApp.Domain.MenuAggregate.Entities.MenuItem;
 using MenuSection = DinnerApp.Domain.MenuAggregate.Entities.MenuSection;

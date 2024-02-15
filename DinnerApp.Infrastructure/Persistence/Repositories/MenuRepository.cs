@@ -1,5 +1,5 @@
 using DinnerApp.Application.Common.Interfaces.Persistence;
-using DinnerApp.Domain.Menu;
+using DinnerApp.Domain.MenuAggregate;
 
 namespace DinnerApp.Infrastructure.Persistence.Repositories;
 

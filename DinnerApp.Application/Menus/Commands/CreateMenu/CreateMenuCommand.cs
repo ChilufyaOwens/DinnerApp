@@ -1,4 +1,4 @@
-using DinnerApp.Domain.Menu;
+using DinnerApp.Domain.MenuAggregate;
 using ErrorOr;
 using MediatR;
 

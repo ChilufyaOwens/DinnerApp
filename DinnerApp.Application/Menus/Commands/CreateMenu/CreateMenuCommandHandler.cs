@@ -1,6 +1,6 @@
 using DinnerApp.Application.Common.Interfaces.Persistence;
 using DinnerApp.Domain.HostAggregate.ValueObjects;
-using DinnerApp.Domain.Menu;
+using DinnerApp.Domain.MenuAggregate;
 using DinnerApp.Domain.MenuAggregate.Entities;
 using ErrorOr;
 using MediatR;

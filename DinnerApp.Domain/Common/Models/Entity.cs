@@ -1,9 +1,14 @@
 ﻿namespace DinnerApp.Domain.Common.Models
 {
-    public abstract class Entity<TId>(TId id) : IEquatable<Entity<TId>>
+    public abstract class Entity<TId> : IEquatable<Entity<TId>>
         where TId : notnull
     {
-        public TId Id { get; } = id;
+        public TId Id { get; protected init; }
+        
+        protected Entity(TId id)
+        {
+            Id = id;
+        }
 
         public override bool Equals(object? obj)
         {
@@ -26,5 +31,9 @@
         {
             return Id.GetHashCode();
         }
+        
+        #pragma warning disable CS8618  
+        protected Entity() { }
+        #pragma warning restore CS8618  
     }
 }

@@ -6,24 +6,26 @@ using DinnerApp.Domain.MenuAggregate.Entities;
 using DinnerApp.Domain.MenuAggregate.ValueObjects;
 using DinnerApp.Domain.MenuReviewAggregate.ValueObjects;
 
-namespace DinnerApp.Domain.Menu;
+namespace DinnerApp.Domain.MenuAggregate;
 
 public sealed class Menu : AggregateRoot<MenuId>  
 {
     
     private readonly List<MenuSection>? _sections = [];
-    private readonly List<DinnerId> _dinners = [];
-    private readonly List<MenuReviewId> _menuReviewIds;
+    private readonly List<DinnerId> _dinnerIds = [];
+    private readonly List<MenuReviewId> _menuReviewIds = [];
 
-    public string Name { get; }    
-    public string Description { get; }
-    public AverageRating AverageRating { get; }
-    public IReadOnlyCollection<MenuSection> Sections => _sections.AsReadOnly();
-    public HostId HostId { get; }
-    public IReadOnlyCollection<DinnerId> DinnerIds => _dinners.AsReadOnly();
+    public string Name { get; private set; }    
+    public string Description { get; private set; }
+    public AverageRating AverageRating { get; private set; }
+    public IReadOnlyCollection<MenuSection>? Sections => _sections?.AsReadOnly();
+    public HostId HostId { get; private set; }
+
+    public IReadOnlyCollection<DinnerId> DinnerIds => _dinnerIds.AsReadOnly();
+    
     public IReadOnlyCollection<MenuReviewId> MenuReviewIds => _menuReviewIds.AsReadOnly();
-    public DateTime CreatedDateTime { get; }
-    public DateTime UpdatedDateTime { get; }
+    public DateTime CreatedDateTime { get; private set; }
+    public DateTime UpdatedDateTime { get; private set; }
 
     private Menu(
         MenuId menuId,
@@ -53,7 +55,11 @@ public sealed class Menu : AggregateRoot<MenuId>
             name,
             description,
             AverageRating.CreateNew(0, 0), 
-            sections ?? [] );
+            sections ?? new() );
     }
+    
+    #pragma warning disable CS8618  
+    private Menu() { }
+    #pragma warning restore CS8618  
 
 }

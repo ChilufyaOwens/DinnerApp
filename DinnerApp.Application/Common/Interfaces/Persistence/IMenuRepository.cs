@@ -1,4 +1,4 @@
-using DinnerApp.Domain.Menu;
+using DinnerApp.Domain.MenuAggregate;
 
 namespace DinnerApp.Application.Common.Interfaces.Persistence;
 

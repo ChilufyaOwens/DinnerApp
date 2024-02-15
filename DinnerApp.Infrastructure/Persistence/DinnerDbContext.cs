@@ -1,4 +1,4 @@
-﻿using DinnerApp.Domain.Menu;
+﻿using DinnerApp.Domain.MenuAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace DinnerApp.Infrastructure.Persistence;

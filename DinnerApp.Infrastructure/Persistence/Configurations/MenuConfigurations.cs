@@ -1,5 +1,5 @@
 ﻿using DinnerApp.Domain.HostAggregate.ValueObjects;
-using DinnerApp.Domain.Menu;
+using DinnerApp.Domain.MenuAggregate;
 using DinnerApp.Domain.MenuAggregate.Entities;
 using DinnerApp.Domain.MenuAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +36,7 @@ public class MenuConfigurations : IEntityTypeConfiguration<Menu>
             .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 
+   
     private void ConfigureMenuDinnerIdsTable(EntityTypeBuilder<Menu> builder)
     {
         builder.OwnsMany(m => m.DinnerIds, di =>
@@ -50,9 +51,11 @@ public class MenuConfigurations : IEntityTypeConfiguration<Menu>
                 .HasColumnName("DinnerId")
                 .ValueGeneratedNever();
         });
-        
+         //add backing field to the navigation property
         builder.Metadata.FindNavigation(nameof(Menu.DinnerIds))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
+         
+        
     }
 
 
@@ -64,7 +67,7 @@ public class MenuConfigurations : IEntityTypeConfiguration<Menu>
 
             ms.WithOwner().HasForeignKey("MenuId");
 
-            ms.HasKey(nameof(MenuSection.Id), "MenuSectionId");
+            ms.HasKey(nameof(MenuSection.Id), "MenuId");
 
             ms.Property(s => s.Id)
             .HasColumnName("MenuSectionId")
