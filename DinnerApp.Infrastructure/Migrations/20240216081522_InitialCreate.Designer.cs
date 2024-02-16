@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DinnerApp.Infrastructure.Migrations
 {
     [DbContext(typeof(DinnerDbContext))]
-    [Migration("20240215211447_InitialCreate")]
+    [Migration("20240216081522_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
