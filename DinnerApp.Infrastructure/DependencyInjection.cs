@@ -22,13 +22,13 @@ public static class DependencyInjection
     {
          services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
          services.AddAuth(configuration);
-         services.AddPersistence();
+         services.AddPersistence(configuration);
          return services;
     }
     
-    private static IServiceCollection AddPersistence(this IServiceCollection services)
+    private static IServiceCollection AddPersistence(this IServiceCollection services, ConfigurationManager configuration)
     {
-        services.AddDbContext<DinnerDbContext>(options => options.UseSqlServer());
+        services.AddDbContext<DinnerDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DinnerAppDb")));
         services.AddScoped<IMenuRepository, MenuRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         return services;
